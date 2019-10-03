@@ -1,4 +1,4 @@
-= ModuleBook Level 1 - User Guide
+= ModuleBook - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -14,13 +14,13 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/AY1920S1-CS2103T-W13-1/main
 
-By: `Team W13-1`      Since: `Aug 2019`      Licence: `MIT`
+By: `AY1920S1-Team W13-1`      Since: `Aug 2019`      Licence: `MIT`
 
 == Introduction
 
-ModuleBook is for NUS students who *want a desktop app for managing modules*. More importantly, ModuleBook is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ModuleBook can manage your tasks more efficiently than traditional GUI apps. Jump to the <<Quick Start>> to get started. Enjoy!
+ModuleBook is a standalone application that tracks and manages modules from National University of Singapore (NUS). The application contains many features useful for module management, such as deadline tracking, lesson scheduling and grade calculator.
 
-//ModuleBook is a standalone application that tracks and manages modules from National University of Singapore (NUS). The application contains many features useful for module management, such as deadline tracking, lesson scheduling and grade calculator.
+ModuleBook is for NUS students who *want a desktop app for managing modules*. More importantly, ModuleBook is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ModuleBook can manage your tasks more efficiently than traditional GUI apps. Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -48,10 +48,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add MODULE_CODE`, `MODULE_CODE` is a parameter which can be used as `add CS1101S`.
+* Items in square brackets are optional e.g `MODULE_CODE [MODULE_TITLE]` can be used as `CS1231 discrete structures`
+//* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+//* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -64,12 +64,12 @@ Adds a module to be tracked +
 Format: `add MODULE_CODE`
 
 [TIP]
-Modules are imported from nusmods database??
+Modules are imported from Nusmods database
 
 Examples:
 
-* `add cs2103t
-* `add manual code? (not in database)`
+* `add cs2103t`
+* `add manual MODULE_CODE (not in database)`
 
 === View the module: `view`
 
@@ -220,25 +220,24 @@ Exits module-view and return to module list
 
 == Command Summary
 
-=== Normal View
+=== List View
 * *Add* `add MODULE_CODE` +
 e.g. `add cs2101`
-* *View* `view MODULE_CODE` +
-e.g. `view cs2100`
 * *Delete* : `delete MODULE_CODE` +
 e.g. `delete cs1231`
+* *Exit* : `exit`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find cs2101`
-* *List* : `list`
 * *Help* : `help`
-* *Exit* : `exit`
+* *List* : `list`
+* *View* `view MODULE_CODE` +
+e.g. `view cs2100`
 
 === Module-View
-* *Delete*
-* *Grade Manager*
-* *Deadline Manager*
-* *File Manager*
-* *CAP Calculator*
-* *Back*
 
-//module-view?
+* *Back*
+* *CAP Calculator*
+* *Deadline Manager*
+* *Delete*
+* *File Manager*
+* *Grade Manager*
