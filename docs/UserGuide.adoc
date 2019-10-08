@@ -241,3 +241,4 @@ e.g. `view cs2100`
 * *Delete*
 * *File Manager*
 * *Grade Manager*
+
