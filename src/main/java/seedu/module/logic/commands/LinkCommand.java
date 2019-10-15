@@ -1,5 +1,8 @@
 package seedu.module.logic.commands;
 
+import java.util.List;
+import static java.util.Objects.requireNonNull;
+
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.exceptions.CommandException;
@@ -7,18 +10,18 @@ import seedu.module.model.Model;
 import seedu.module.model.module.TrackedModule;
 import seedu.module.model.module.Link;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Adds or launches a Link in a Module depending on input
+ */
 public class LinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Link to a Module. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds or launches a Link to a Module. "
             + "Parameters: " + "Action (add/go)"
-            + "Index" + "/l website link\n"
+            + "Index" + "Link title (add)" + "/l website link (add)/link title (go)\n"
             + "Example: " + COMMAND_WORD + " add"
-            + "1" + " /l " + "http://google.com\n";
+            + "1 example " + " /l " + "http://google.com\n"
+            + COMMAND_WORD + " go" + "1 " + "/l " + "example\n";
 
     public static final String MESSAGE_LINK_SUCCESS = "New link added to module.";
     public static final String MESSAGE_LAUNCH_SUCCESS = "Website opened in default browser.";

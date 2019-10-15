@@ -2,26 +2,22 @@ package seedu.module.logic.parser;
 
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import org.apache.commons.validator.routines.UrlValidator;
-
 import seedu.module.logic.commands.LinkCommand;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.model.module.Link;
-import seedu.module.model.module.TrackedModule;
 
-import java.util.List;
 
 /**
  * Parses input arguments and creates a new LinkCommand object
  */
 public class LinkCommandParser implements Parser<LinkCommand>{
 
-        /**
-         * Parses the given {@code String} of arguments in the context of the FindCommand
-         * and returns a FindCommand object for execution.
-         * @throws ParseException if the user input does not conform the expected format
-         */
+    /**
+     * Parses the given {@code String} of arguments in the context of the LinkCommand
+     * and returns a LinkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public LinkCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

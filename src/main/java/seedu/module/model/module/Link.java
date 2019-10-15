@@ -1,6 +1,5 @@
 package seedu.module.model.module;
 
-import static seedu.module.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 import java.awt.Desktop;
