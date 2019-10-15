@@ -1,6 +1,8 @@
 package seedu.module.model.module;
 
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 /**
  * Represents a TrackedModule in the ModuleList.
@@ -9,6 +11,8 @@ public class TrackedModule implements Module {
 
     // Identity field
     private final ArchivedModule archivedModule;
+
+    public List<Link> links = new ArrayList<Link>();
 
     /**
      * Every field must be present and not null.
@@ -40,6 +44,19 @@ public class TrackedModule implements Module {
 
         return otherTrackedModule != null
                 && otherTrackedModule.getModuleCode().equals(getModuleCode());
+    }
+
+    public void addLink(Link link){
+        this.links.add(link);
+    }
+
+    public boolean hasLinkTitle(Link link){
+        for(Link l: links){
+            if(link.name.equals(l.name)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

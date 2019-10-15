@@ -1,6 +1,9 @@
 package seedu.module.storage;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,13 +21,17 @@ class JsonAdaptedModule {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Module's %s field is missing!";
 
     private final String moduleCode;
+    private final List<JsonAdaptedLink> links = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedModule} with the given module details.
      */
     @JsonCreator
-    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode) {
+    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("links") List<JsonAdaptedLink> links) {
         this.moduleCode = moduleCode;
+        if (links != null) {
+            this.links.addAll(links);
+        }
     }
 
     /**
@@ -32,6 +39,9 @@ class JsonAdaptedModule {
      */
     public JsonAdaptedModule(TrackedModule source) {
         moduleCode = source.getModuleCode();
+        links.addAll(source.links.stream()
+                .map(JsonAdaptedLink::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -53,7 +63,11 @@ class JsonAdaptedModule {
             throw new IllegalValueException(String.format("Archived Module %s not found", moduleCode));
         }
 
-        return new TrackedModule(archivedModule.get());
+        TrackedModule result = new TrackedModule(archivedModule.get());
+        for (JsonAdaptedLink link : links) {
+            result.links.add(link.toModelType());
+        }
+        return result;
     }
 
 }
