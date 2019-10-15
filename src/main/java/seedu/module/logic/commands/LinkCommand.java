@@ -17,11 +17,11 @@ public class LinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds or launches a Link to a Module. "
-            + "Parameters: " + "Action (add/go)"
-            + "Index" + "Link title (add)" + "/l website link (add)/link title (go)\n"
-            + "Example: " + COMMAND_WORD + " add"
-            + "1 example " + " /l " + "http://google.com\n"
-            + COMMAND_WORD + " go" + "1 " + "/l " + "example\n";
+            + "Parameters: " + "Index"
+            + "Action" + "t/Link title [l/Link]\n"
+            + "Example: " + COMMAND_WORD + "1 " + "a/add "
+            + "t/example " + "l/ " + "http://google.com\n"
+            + COMMAND_WORD + "1 "+ "a/go " + "t/" + "example\n";
 
     public static final String MESSAGE_LINK_SUCCESS = "New link added to module.";
     public static final String MESSAGE_LAUNCH_SUCCESS = "Website opened in default browser.";

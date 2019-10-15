@@ -1,6 +1,9 @@
 package seedu.module.logic.parser;
 
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_LINK;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import seedu.module.logic.commands.LinkCommand;
 import seedu.module.commons.core.index.Index;
@@ -24,27 +27,28 @@ public class LinkCommandParser implements Parser<LinkCommand>{
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
         }
-
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_LINK, PREFIX_TITLE);
+        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
         try {
-            String[] splitLink = trimmedArgs.split("/l");
-            if(splitLink.length==1){
-                throw new ParseException("Input format error. /l not found");
+            if(!argMultimap.getValue(PREFIX_ACTION).isPresent()){
+                throw new ParseException("Input format error. a/ not found");
             }
-            String[] nameArgs = splitLink[0].split("\\s+", 3);
-            String action = nameArgs[0];
-            if(action.equals("add")) {  //link add 1 title /l link
-                if (Link.isValidUrl(splitLink[1].trim())) {
-                    String title = nameArgs[2];
-                    Link addedLink = new Link(title.trim(), splitLink[1].trim());
-                    Index index = Index.fromOneBased(Integer.parseInt(nameArgs[1].trim()));
-                    return new LinkCommand(action, index, addedLink);
+            if(argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {  //link add 1 title /l link
+                if (argMultimap.getValue(PREFIX_LINK).isPresent() && argMultimap.getValue(PREFIX_TITLE).isPresent()) {
+                    String title = argMultimap.getValue(PREFIX_TITLE).get();
+                    String link = argMultimap.getValue(PREFIX_LINK).get();
+                    Link addedLink = new Link(title.trim(), link.trim());
+                    return new LinkCommand("add", index, addedLink);
                 } else {
                     throw new ParseException(Link.MESSAGE_CONSTRAINTS);
                 }
-            }else if(action.equals("go")){
-                Index index = Index.fromOneBased(Integer.parseInt(nameArgs[1].trim()));
-                String linkTitle = splitLink[1].trim();
-                return new LinkCommand(action, index, linkTitle);
+            }else if(argMultimap.getValue(PREFIX_ACTION).get().equals("go")){
+                if (argMultimap.getValue(PREFIX_TITLE).isPresent()) {
+                    String title = argMultimap.getValue(PREFIX_TITLE).get();
+                    return new LinkCommand("go", index, title);
+                }else{
+                    throw new ParseException(Link.MESSAGE_CONSTRAINTS);
+                }
             }else {
                 throw new ParseException("Command not recognized");
             }
