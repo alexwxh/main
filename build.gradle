@@ -26,7 +26,7 @@ repositories {
 }
 
 checkstyle {
-    toolVersion = '8.23'
+    toolVersion = '8.1'
 }
 
 jacocoTestReport {
