@@ -33,7 +33,7 @@ public class LinkCommandParser implements Parser<LinkCommand>{
             if(!argMultimap.getValue(PREFIX_ACTION).isPresent()){
                 throw new ParseException("Input format error. a/ not found");
             }
-            if(argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {  //link add 1 title /l link
+            if(argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {
                 return new AddLinkCommandParser().parse(argMultimap);
             }else if(argMultimap.getValue(PREFIX_ACTION).get().equals("go")){
                 return new LaunchLinkCommandParser().parse(argMultimap);
