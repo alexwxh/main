@@ -7,10 +7,11 @@ import java.util.List;
 /**
  * Represents a TrackedModule in the ModuleList.
  */
-public class TrackedModule implements Module {
+public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
+    private Deadline deadline;
 
     public List<Link> links = new ArrayList<Link>();
 
@@ -19,6 +20,11 @@ public class TrackedModule implements Module {
      */
     public TrackedModule(ArchivedModule archivedModule) {
         this.archivedModule = archivedModule;
+        this.deadline = new Deadline("");
+    }
+    public TrackedModule(ArchivedModule archivedModule, Deadline deadline) {
+        this.archivedModule = archivedModule;
+        this.deadline = deadline;
     }
 
     public String getModuleCode() {
@@ -31,6 +37,14 @@ public class TrackedModule implements Module {
 
     public String getDescription() {
         return archivedModule.getDescription();
+    }
+
+    public Deadline getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Deadline newDeadline) {
+        this.deadline.setValue(newDeadline.getValue());
     }
 
     /**
@@ -82,17 +96,16 @@ public class TrackedModule implements Module {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(archivedModule);
+        return Objects.hash(archivedModule, deadline);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getModuleCode())
-                .append(" Title: ")
-                .append(getTitle())
-                .append(" Description: ")
-                .append(getDescription());
+                .append(" Title: ").append(getTitle())
+                .append(" Description: ").append(getDescription())
+                .append(" Deadline: ").append(getDeadline().toString());
         return builder.toString();
     }
 

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.module.commons.exceptions.IllegalValueException;
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.ArchivedModuleList;
+import seedu.module.model.module.Deadline;
 import seedu.module.model.module.TrackedModule;
 
 /**
@@ -22,13 +23,15 @@ class JsonAdaptedModule {
 
     private final String moduleCode;
     private final List<JsonAdaptedLink> links = new ArrayList<>();
+    private final String deadline;
 
     /**
      * Constructs a {@code JsonAdaptedModule} with the given module details.
      */
     @JsonCreator
-    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("links") List<JsonAdaptedLink> links) {
+    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("deadline") String deadline, @JsonProperty("links") List<JsonAdaptedLink> links) {
         this.moduleCode = moduleCode;
+        this.deadline = deadline;
         if (links != null) {
             this.links.addAll(links);
         }
@@ -39,6 +42,7 @@ class JsonAdaptedModule {
      */
     public JsonAdaptedModule(TrackedModule source) {
         moduleCode = source.getModuleCode();
+        deadline = source.getDeadline().getValue();
         links.addAll(source.links.stream()
                 .map(JsonAdaptedLink::new)
                 .collect(Collectors.toList()));
@@ -63,7 +67,13 @@ class JsonAdaptedModule {
             throw new IllegalValueException(String.format("Archived Module %s not found", moduleCode));
         }
 
-        TrackedModule result = new TrackedModule(archivedModule.get());
+        if (deadline == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Deadline.class.getSimpleName()));
+        }
+        final Deadline modelDeadline = new Deadline(deadline);
+
+        TrackedModule result = new TrackedModule(archivedModule.get(), modelDeadline);
         for (JsonAdaptedLink link : links) {
             result.links.add(link.toModelType());
         }

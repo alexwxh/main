@@ -1,6 +1,7 @@
 package seedu.module.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -113,5 +114,23 @@ public interface Model {
      * Changes the current list to be shown to the TrackedModuleList.
      */
     void displayTrackedList();
+
+    /**
+     * Returns the active module that is being viewed by the user.
+     */
+    Optional<Module> getDisplayedModule();
+
+    /**
+     * Sets the active module that will be viewed by the user.
+     * @param toDisplay the module to be displayed
+     */
+    void setDisplayedModule(Module toDisplay);
+
+    /**
+     * Replaces the given module {@code target} with {@code editedModule}.
+     * {@code target} must exist in the module book.
+     * The module identity of {@code editedModule} must not be the same as another existing module in the module book.
+     */
+    void setModule(TrackedModule target, TrackedModule editedModule);
 }
 
