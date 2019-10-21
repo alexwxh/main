@@ -5,10 +5,11 @@ import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_LINK;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TITLE;
 
-import seedu.module.logic.commands.LinkCommand;
+import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.parser.exceptions.ParseException;
-import seedu.module.model.module.Link;
+import seedu.module.logic.parser.linkcommandparsers.AddLinkCommandParser;
+import seedu.module.logic.parser.linkcommandparsers.LaunchLinkCommandParser;
 
 
 /**
@@ -28,27 +29,14 @@ public class LinkCommandParser implements Parser<LinkCommand>{
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_LINK, PREFIX_TITLE);
-        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
         try {
             if(!argMultimap.getValue(PREFIX_ACTION).isPresent()){
                 throw new ParseException("Input format error. a/ not found");
             }
             if(argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {  //link add 1 title /l link
-                if (argMultimap.getValue(PREFIX_LINK).isPresent() && argMultimap.getValue(PREFIX_TITLE).isPresent()) {
-                    String title = argMultimap.getValue(PREFIX_TITLE).get();
-                    String link = argMultimap.getValue(PREFIX_LINK).get();
-                    Link addedLink = new Link(title.trim(), link.trim());
-                    return new LinkCommand("add", index, addedLink);
-                } else {
-                    throw new ParseException(Link.MESSAGE_CONSTRAINTS);
-                }
+                return new AddLinkCommandParser().parse(argMultimap);
             }else if(argMultimap.getValue(PREFIX_ACTION).get().equals("go")){
-                if (argMultimap.getValue(PREFIX_TITLE).isPresent()) {
-                    String title = argMultimap.getValue(PREFIX_TITLE).get();
-                    return new LinkCommand("go", index, title);
-                }else{
-                    throw new ParseException(Link.MESSAGE_CONSTRAINTS);
-                }
+                return new LaunchLinkCommandParser().parse(argMultimap);
             }else {
                 throw new ParseException("Command not recognized");
             }
