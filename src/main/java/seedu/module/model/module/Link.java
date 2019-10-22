@@ -19,8 +19,11 @@ public class Link {
     public final String url;
     public final String name;
 
-    public Link(String name, String url) {
+    public Link(String name, String url) throws IllegalArgumentException {
         requireNonNull(url);
+        if (!isValidUrl(url)) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         this.name = name;
         this.url = url;
     }
@@ -58,5 +61,10 @@ public class Link {
         } catch (IOException e) {
             throw new LinkAccessException("Couldn't open system browser: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

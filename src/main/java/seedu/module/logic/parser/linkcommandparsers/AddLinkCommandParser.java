@@ -1,7 +1,7 @@
 package seedu.module.logic.parser.linkcommandparsers;
 
 import static seedu.module.logic.parser.CliSyntax.PREFIX_LINK;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.linkcommands.AddLinkCommand;
@@ -22,8 +22,8 @@ public class AddLinkCommandParser {
      */
     public AddLinkCommand parse(ArgumentMultimap argMultimap) throws ParseException {
         Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        if (argMultimap.getValue(PREFIX_LINK).isPresent() && argMultimap.getValue(PREFIX_TITLE).isPresent()) {
-            String title = argMultimap.getValue(PREFIX_TITLE).get();
+        if (argMultimap.getValue(PREFIX_LINK).isPresent() && argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            String title = argMultimap.getValue(PREFIX_NAME).get();
             String link = argMultimap.getValue(PREFIX_LINK).get();
             Link addedLink = new Link(title.trim(), link.trim());
             return new AddLinkCommand(index, addedLink);

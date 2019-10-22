@@ -3,7 +3,7 @@ package seedu.module.logic.parser;
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_ACTION;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_LINK;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
@@ -27,7 +27,7 @@ public class LinkCommandParser implements Parser<LinkCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
         }
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_LINK, PREFIX_TITLE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_LINK, PREFIX_NAME);
         try {
             if (!argMultimap.getValue(PREFIX_ACTION).isPresent()) {
                 throw new ParseException("Input format error. a/ not found");

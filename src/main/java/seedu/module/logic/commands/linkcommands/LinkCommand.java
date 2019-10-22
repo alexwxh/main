@@ -12,7 +12,7 @@ public abstract class LinkCommand extends Command {
             + "Parameters: " + "Index"
             + "Action" + "t/Link title [l/Link]\n"
             + "Example: " + COMMAND_WORD + "1 " + "a/add "
-            + "t/example " + "l/ " + "http://google.com\n"
+            + "n/example " + "l/ " + "http://google.com\n"
             + COMMAND_WORD + "1 " + "a/go " + "t/" + "example\n";
 
     public static final String MESSAGE_LINK_SUCCESS = "New link added to module.";
