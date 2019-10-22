@@ -1,14 +1,17 @@
 package seedu.module.model.module;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Represents a TrackedModule in the ModuleList.
  */
-public class TrackedModule implements Module {
+public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
+    private List<Deadline> deadlineList = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
@@ -27,6 +30,23 @@ public class TrackedModule implements Module {
 
     public String getDescription() {
         return archivedModule.getDescription();
+    }
+
+    public String getDeadline() {
+        String deadlineString = "Deadline: \n";
+        for (int i = 0; i < deadlineList.size(); i++) {
+            deadlineString += ((i + 1) + ". " + deadlineList.get(i).getDescription()
+                    + ", " + deadlineList.get(i).getTime()) + "\n";
+        }
+        return deadlineString;
+    }
+
+    public List<Deadline> getDeadlineList() {
+        return deadlineList;
+    }
+
+    public void addDeadline(Deadline deadline) {
+        this.deadlineList.add(deadline);
     }
 
     /**
@@ -65,17 +85,16 @@ public class TrackedModule implements Module {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(archivedModule);
+        return Objects.hash(archivedModule, deadlineList);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getModuleCode())
-                .append(" Title: ")
-                .append(getTitle())
-                .append(" Description: ")
-                .append(getDescription());
+                .append(" Title: ").append(getTitle())
+                .append(" Description: ").append(getDescription())
+                .append(" Deadline: ").append(getDeadline());
         return builder.toString();
     }
 
