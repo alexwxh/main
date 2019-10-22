@@ -11,7 +11,7 @@ public class TrackedModule implements Module, Trackable {
 
     // Identity field
     private final ArchivedModule archivedModule;
-    private Deadline deadline;
+    private List<Deadline> deadlineList = new ArrayList<>();
 
     private List<Link> links = new ArrayList<>();
 
@@ -20,11 +20,6 @@ public class TrackedModule implements Module, Trackable {
      */
     public TrackedModule(ArchivedModule archivedModule) {
         this.archivedModule = archivedModule;
-        this.deadline = new Deadline("");
-    }
-    public TrackedModule(ArchivedModule archivedModule, Deadline deadline) {
-        this.archivedModule = archivedModule;
-        this.deadline = deadline;
     }
 
     public String getModuleCode() {
@@ -39,12 +34,21 @@ public class TrackedModule implements Module, Trackable {
         return archivedModule.getDescription();
     }
 
-    public Deadline getDeadline() {
-        return deadline;
+    public String getDeadline() {
+        String deadlineString = "Deadline: \n";
+        for (int i = 0; i < deadlineList.size(); i++) {
+            deadlineString += ((i + 1) + ". " + deadlineList.get(i).getDescription()
+                    + ", " + deadlineList.get(i).getTime()) + "\n";
+        }
+        return deadlineString;
     }
 
-    public void setDeadline(Deadline newDeadline) {
-        this.deadline.setValue(newDeadline.getValue());
+    public List<Deadline> getDeadlineList() {
+        return deadlineList;
+    }
+
+    public void addDeadline(Deadline deadline) {
+        this.deadlineList.add(deadline);
     }
 
     public List<Link> getLink() {
@@ -109,7 +113,7 @@ public class TrackedModule implements Module, Trackable {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(archivedModule, deadline);
+        return Objects.hash(archivedModule, deadlineList);
     }
 
     @Override
@@ -118,7 +122,7 @@ public class TrackedModule implements Module, Trackable {
         builder.append(getModuleCode())
                 .append(" Title: ").append(getTitle())
                 .append(" Description: ").append(getDescription())
-                .append(" Deadline: ").append(getDeadline().toString());
+                .append(" Deadline: ").append(getDeadline());
         return builder.toString();
     }
 

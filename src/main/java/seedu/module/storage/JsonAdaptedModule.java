@@ -22,17 +22,20 @@ class JsonAdaptedModule {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Module's %s field is missing!";
 
     private final String moduleCode;
+    private final List<JsonAdaptedDeadline> deadlines = new ArrayList<>();
     private final List<JsonAdaptedLink> links = new ArrayList<>();
-    private final String deadline;
 
     /**
      * Constructs a {@code JsonAdaptedModule} with the given module details.
      */
     @JsonCreator
-    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("deadline") String deadline,
+    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode,
+                             @JsonProperty("deadlines") List<JsonAdaptedDeadline> deadlines,
                              @JsonProperty("links") List<JsonAdaptedLink> links) {
         this.moduleCode = moduleCode;
-        this.deadline = deadline;
+        if (deadlines != null) {
+            this.deadlines.addAll(deadlines);
+        }
         if (links != null) {
             this.links.addAll(links);
         }
@@ -43,7 +46,7 @@ class JsonAdaptedModule {
      */
     public JsonAdaptedModule(TrackedModule source) {
         moduleCode = source.getModuleCode();
-        deadline = source.getDeadline().getValue();
+        deadlines.addAll(source.getDeadlineList().stream().map(JsonAdaptedDeadline::new).collect(Collectors.toList()));
         links.addAll(source.getLink().stream()
                 .map(JsonAdaptedLink::new)
                 .collect(Collectors.toList()));
@@ -68,13 +71,11 @@ class JsonAdaptedModule {
             throw new IllegalValueException(String.format("Archived Module %s not found", moduleCode));
         }
 
-        if (deadline == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Deadline.class.getSimpleName()));
+        TrackedModule result = new TrackedModule(archivedModule.get());
+        for (JsonAdaptedDeadline deadline : deadlines) {
+            result.getDeadlineList().add(deadline.toModelType());
         }
-        final Deadline modelDeadline = new Deadline(deadline);
 
-        TrackedModule result = new TrackedModule(archivedModule.get(), modelDeadline);
         for (JsonAdaptedLink link : links) {
             result.getLink().add(link.toModelType());
         }
