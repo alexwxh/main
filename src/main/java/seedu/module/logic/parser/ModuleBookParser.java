@@ -14,9 +14,9 @@ import seedu.module.logic.commands.DeleteCommand;
 import seedu.module.logic.commands.ExitCommand;
 import seedu.module.logic.commands.FindCommand;
 import seedu.module.logic.commands.HelpCommand;
-import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.logic.commands.ListCommand;
 import seedu.module.logic.commands.ViewCommand;
+import seedu.module.logic.commands.linkcommands.LinkCommand;
 import seedu.module.logic.parser.exceptions.ParseException;
 
 /**

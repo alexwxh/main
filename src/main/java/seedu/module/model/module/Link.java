@@ -7,45 +7,56 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.apache.commons.validator.routines.UrlValidator;
+
 import seedu.module.model.module.exceptions.LinkAccessException;
 
+/**
+ * Represents a Link in a TrackedModule
+ */
 public class Link {
     public static final String MESSAGE_CONSTRAINTS = "Not a valid URL";
 
     public final String url;
     public final String name;
 
-    public Link(String name, String url){
+    public Link(String name, String url) {
         requireNonNull(url);
         this.name = name;
         this.url = url;
     }
 
-    public static boolean isValidUrl(String url){
+    /**
+     * Returns True if the string given is a valid URL
+     * @param url
+     * @return
+     */
+    public static boolean isValidUrl(String url) {
         UrlValidator urlValidator = new UrlValidator();
         return urlValidator.isValid(url);
     }
-    public void launch(){
-        String runningOS = System.getProperty("os.name").toLowerCase();
+
+    /**
+     * Launches the url in this Link in the user's default browser
+     */
+    public void launch() {
+        String runningSystem = System.getProperty("os.name").toLowerCase();
 
         try {
-            if(Desktop.isDesktopSupported()) { // Probably Windows
+            if (Desktop.isDesktopSupported()) { // Probably Windows
                 Desktop desktop = Desktop.getDesktop();
                 desktop.browse(URI.create(url));
             } else { // Definitely Non-windows
                 Runtime runtime = Runtime.getRuntime();
-                if(runningOS.contains("mac")) { // Apples
+                if (runningSystem.contains("mac")) { // Apples
                     runtime.exec("open " + url);
-                }
-                else if(runningOS.contains("nix") || runningOS.contains("nux")) { // Linux flavours
+                } else if (runningSystem.contains("nix") || runningSystem.contains("nux")) { // Linux flavours
                     runtime.exec("xdg-open " + url);
-                }
-                else
+                } else {
                     throw new LinkAccessException("Unable/unwilling to launch a browser in your OS.");
+                }
             }
-        }
-        catch(IOException e) {
-            throw new LinkAccessException("Couldn't open system browser: "+ e.getMessage());
+        } catch (IOException e) {
+            throw new LinkAccessException("Couldn't open system browser: " + e.getMessage());
         }
     }
 }

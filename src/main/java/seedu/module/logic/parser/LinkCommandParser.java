@@ -6,7 +6,6 @@ import static seedu.module.logic.parser.CliSyntax.PREFIX_LINK;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import seedu.module.logic.commands.linkcommands.LinkCommand;
-import seedu.module.commons.core.index.Index;
 import seedu.module.logic.parser.exceptions.ParseException;
 import seedu.module.logic.parser.linkcommandparsers.AddLinkCommandParser;
 import seedu.module.logic.parser.linkcommandparsers.LaunchLinkCommandParser;
@@ -15,7 +14,7 @@ import seedu.module.logic.parser.linkcommandparsers.LaunchLinkCommandParser;
 /**
  * Parses input arguments and creates a new LinkCommand object
  */
-public class LinkCommandParser implements Parser<LinkCommand>{
+public class LinkCommandParser implements Parser<LinkCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the LinkCommand
@@ -30,20 +29,19 @@ public class LinkCommandParser implements Parser<LinkCommand>{
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTION, PREFIX_LINK, PREFIX_TITLE);
         try {
-            if(!argMultimap.getValue(PREFIX_ACTION).isPresent()){
+            if (!argMultimap.getValue(PREFIX_ACTION).isPresent()) {
                 throw new ParseException("Input format error. a/ not found");
             }
-            if(argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {
+            if (argMultimap.getValue(PREFIX_ACTION).get().equals("add")) {
                 return new AddLinkCommandParser().parse(argMultimap);
-            }else if(argMultimap.getValue(PREFIX_ACTION).get().equals("go")){
+            } else if (argMultimap.getValue(PREFIX_ACTION).get().equals("go")) {
                 return new LaunchLinkCommandParser().parse(argMultimap);
-            }else {
+            } else {
                 throw new ParseException("Command not recognized");
             }
-        }catch (ParseException e){
+        } catch (ParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE), e);
         }
     }
 
 }
-

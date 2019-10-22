@@ -1,8 +1,8 @@
 package seedu.module.storage;
 
-import java.util.Optional;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -29,7 +29,8 @@ class JsonAdaptedModule {
      * Constructs a {@code JsonAdaptedModule} with the given module details.
      */
     @JsonCreator
-    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("deadline") String deadline, @JsonProperty("links") List<JsonAdaptedLink> links) {
+    public JsonAdaptedModule(@JsonProperty("moduleCode") String moduleCode, @JsonProperty("deadline") String deadline,
+                             @JsonProperty("links") List<JsonAdaptedLink> links) {
         this.moduleCode = moduleCode;
         this.deadline = deadline;
         if (links != null) {
@@ -43,7 +44,7 @@ class JsonAdaptedModule {
     public JsonAdaptedModule(TrackedModule source) {
         moduleCode = source.getModuleCode();
         deadline = source.getDeadline().getValue();
-        links.addAll(source.links.stream()
+        links.addAll(source.getLink().stream()
                 .map(JsonAdaptedLink::new)
                 .collect(Collectors.toList()));
     }
@@ -75,7 +76,7 @@ class JsonAdaptedModule {
 
         TrackedModule result = new TrackedModule(archivedModule.get(), modelDeadline);
         for (JsonAdaptedLink link : links) {
-            result.links.add(link.toModelType());
+            result.getLink().add(link.toModelType());
         }
         return result;
     }

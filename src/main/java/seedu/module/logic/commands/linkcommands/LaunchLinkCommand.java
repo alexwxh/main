@@ -1,5 +1,9 @@
 package seedu.module.logic.commands.linkcommands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.CommandResult;
@@ -8,23 +12,29 @@ import seedu.module.model.Model;
 import seedu.module.model.module.Link;
 import seedu.module.model.module.TrackedModule;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Launches a link in the module in the system's default browser
+ */
 public class LaunchLinkCommand extends LinkCommand {
     private final Index targetIndex;
     private final String linkTitle;
 
-    public LaunchLinkCommand(Index targetIndex, String linkTitle){
+    public LaunchLinkCommand(Index targetIndex, String linkTitle) {
         this.targetIndex = targetIndex;
         this.linkTitle = linkTitle;
     }
 
-    private Link find(TrackedModule targetModule, String linkTitle) throws CommandException{
-        for (Link l: targetModule.links){
-            if (l.name.equals(linkTitle)){
-                return l;
+    /**
+     * Returns Link object with matching title from the TrackedModule
+     * @param targetModule
+     * @param linkTitle
+     * @return
+     * @throws CommandException
+     */
+    private Link find(TrackedModule targetModule, String linkTitle) throws CommandException {
+        for (Link link: targetModule.getLink()) {
+            if (link.name.equals(linkTitle)) {
+                return link;
             }
         }
         throw new CommandException("Link with matching title not found");

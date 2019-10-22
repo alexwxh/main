@@ -1,8 +1,8 @@
 package seedu.module.model.module;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a TrackedModule in the ModuleList.
@@ -13,7 +13,7 @@ public class TrackedModule implements Module, Trackable {
     private final ArchivedModule archivedModule;
     private Deadline deadline;
 
-    public List<Link> links = new ArrayList<Link>();
+    private List<Link> links = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
@@ -47,6 +47,10 @@ public class TrackedModule implements Module, Trackable {
         this.deadline.setValue(newDeadline.getValue());
     }
 
+    public List<Link> getLink() {
+        return links;
+    }
+
     /**
      * Returns true if both modules of the same name have the same identity field.
      * This defines a weaker notion of equality between two modules.
@@ -60,13 +64,22 @@ public class TrackedModule implements Module, Trackable {
                 && otherTrackedModule.getModuleCode().equals(getModuleCode());
     }
 
-    public void addLink(Link link){
+    /**
+     * Adds a link to the List of links in this module.
+     * @param link link to add
+     */
+    public void addLink(Link link) {
         this.links.add(link);
     }
 
-    public boolean hasLinkTitle(Link link){
-        for(Link l: links){
-            if(link.name.equals(l.name)){
+    /**
+     * Returns true if there exists a link with the same title
+     * @param link
+     * @return
+     */
+    public boolean hasLinkTitle(Link link) {
+        for (Link l: links) {
+            if (link.name.equals(l.name)) {
                 return true;
             }
         }

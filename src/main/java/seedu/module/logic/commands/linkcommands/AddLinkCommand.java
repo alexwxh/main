@@ -1,5 +1,9 @@
 package seedu.module.logic.commands.linkcommands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.module.commons.core.Messages;
 import seedu.module.commons.core.index.Index;
 import seedu.module.logic.commands.CommandResult;
@@ -8,10 +12,9 @@ import seedu.module.model.Model;
 import seedu.module.model.module.Link;
 import seedu.module.model.module.TrackedModule;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Adds a given Link to the specified TrackedModule
+ */
 public class AddLinkCommand extends LinkCommand {
     private final Index targetIndex;
     private final Link webLink;
