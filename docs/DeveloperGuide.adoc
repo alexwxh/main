@@ -365,7 +365,7 @@ An example usage scenario of an *add link* operation is given below and the beha
 
 1. The user launches the application with an existing save file. `ModuleBook` is initialized with existing `TrackedModule`.
 
-2. The user executes `link MODULE_INDEX a/add n/LINK_NAME l/LINK_URL` to add a link with name `LINK_NAME`, linked to `LINK_URL` to the `TrackedModule` with the corresponding `MODULE_INDEX`.
+2. The user inputs `link MODULE_INDEX a/add n/LINK_NAME l/LINK_URL` to add a link with name `LINK_NAME`, linked to `LINK_URL` to the `TrackedModule` with the corresponding `MODULE_INDEX`.
 
 3. `LogicManager` receives user input and parses it using `ModuleBookParser#parseCommand()`.  `ModuleBookParser` reads the `COMMAND_WORD` and identifies the input as a `Link` related command and passes the input to `LinkCommandParser`.
 
@@ -373,15 +373,16 @@ An example usage scenario of an *add link* operation is given below and the beha
 
 5. `AddLinkCommandParser` checks for the validity of `LINK_URL` given by the user and creates the relevant `Link` and `AddLinkCommand` objects.
 
-6. `AddLinkCommand` calls `Model#get(MODULE_INDEX)` to find the required module. If it does not exist or is not currently tracked, `AddLinkCommand` throws a `CommandException`. Otherwise, it then proceeds to call `TrackedModule#hasLinkTitle(String LINK_NAME)` to check for an existing `Link` object with the same `LINK_NAME`.
+6. `AddLinkCommand` calls `Model#get(MODULE_INDEX)` to find the required module. If it does not exist or is not currently tracked, `AddLinkCommand` throws a `CommandException`. Otherwise, it then proceeds to call `TrackedModule#hasLinkTitle(LINK_NAME)` to check for an existing `Link` object with the same `LINK_NAME`.
 
 7. If such a `Link` object exists, `AddLinkCommand` aborts and throws a `CommandException`. Otherwise, the created `Link` will be added to the specified `TrackedModule`.
 
 8. If the operation is successful, a `CommandResult` with the success message will be returned.
 
+.Sequence diagram for add link operation
 image::AddLinkCommandSequenceDiagram.png[]
+.Reference of addLink function from sequence diagram shown above
 image::AddLinkCommandSequenceDiagramExtension.png[]
-
 
 ==== Design Considerations
 
