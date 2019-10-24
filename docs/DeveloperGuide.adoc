@@ -381,7 +381,7 @@ An example usage scenario of an *add link* operation is given below and the beha
 
 .Sequence diagram for add link operation
 image::AddLinkCommandSequenceDiagram.png[]
-.Reference of addLink function from sequence diagram shown above
+.Reference of add link to module function from sequence diagram shown above
 image::AddLinkCommandSequenceDiagramExtension.png[]
 
 ==== Design Considerations

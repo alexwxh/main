@@ -15,10 +15,10 @@ participant ":Model" as Model MODEL_COLOR
 participant "link:Link" as Link MODEL_COLOR
 end box
 
-[-> LogicManager : execute("link MODULE_INDEX a/add n/LINK_NAME l/LINK_URL")
+[-> LogicManager : execute(USER_INPUT)
 activate LogicManager
 
-LogicManager -> ModuleBookParser : parseCommand("link MODULE_INDEX a/add ...")
+LogicManager -> ModuleBookParser : parseCommand("link ...")
 activate ModuleBookParser
 
 create LinkCommandParser
@@ -28,7 +28,7 @@ activate LinkCommandParser
 LinkCommandParser --> ModuleBookParser
 deactivate LinkCommandParser
 
-ModuleBookParser -> LinkCommandParser : parse("MODULE_INDEX a/add ... ")
+ModuleBookParser -> LinkCommandParser : parse("MODULE_INDEX ... ")
 activate LinkCommandParser
 
 create AddLinkCommandParser
@@ -48,7 +48,7 @@ Link --> AddLinkCommandParser : link
 deactivate Link
 
 create AddLinkCommand
-AddLinkCommandParser -> AddLinkCommand : AddLinkCommand(MODULE_INDEX, link)
+AddLinkCommandParser -> AddLinkCommand : AddLinkCommand(INDEX, link)
 activate AddLinkCommand
 
 AddLinkCommand --> AddLinkCommandParser : a
