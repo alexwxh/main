@@ -14,8 +14,8 @@ import seedu.module.model.module.predicate.SameModuleCodePredicate;
 public abstract class LinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds, deletes or launches a Link to a Module. "
-            + "Parameters: " + "Action " + "t/Link title [l/Link]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds, deletes or launches a Link to a Module.\n"
+            + "Parameters: " + "Action " + "n/Link title [l/Link]\n"
             + "Example: " + COMMAND_WORD + " add "
             + "n/example " + "l/ " + "http://google.com\n"
             + COMMAND_WORD + " go " + "t/" + "example\n";
@@ -39,10 +39,8 @@ public abstract class LinkCommand extends Command {
         if (!model.getDisplayedModule().isPresent()) {
             throw new CommandException(MESSAGE_NO_DISPLAYED_MODULE_ERROR);
         }
-        Module currentDisplayed = model.getDisplayedModule().get();
-        SameModuleCodePredicate findModulePredicate = new SameModuleCodePredicate(currentDisplayed.getModuleCode());
-        TrackedModule moduleToAddLink = model.findTrackedModule(findModulePredicate)
+        return (TrackedModule) model.getDisplayedModule()
+                .filter(m -> m instanceof TrackedModule)
                 .orElseThrow(() -> new CommandException(MESSAGE_MODULE_NOT_TRACKED));
-        return moduleToAddLink;
     }
 }
