@@ -3,10 +3,7 @@ package seedu.module.logic.commands.linkcommands;
 import seedu.module.logic.commands.Command;
 import seedu.module.logic.commands.exceptions.CommandException;
 import seedu.module.model.Model;
-import seedu.module.model.module.Module;
 import seedu.module.model.module.TrackedModule;
-import seedu.module.model.module.predicate.SameModuleCodePredicate;
-
 
 /**
  * Adds or launches a Link in a Module depending on input
