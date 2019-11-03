@@ -39,18 +39,18 @@
                <Text fx:id="preclusion" styleClass="text-bright" text="\$preclusion" />
             </children>
          </TextFlow>
-         <Label styleClass="label-bright" text="Semesters offered" underline="true" VBox.vgrow="ALWAYS" />
+         <Label styleClass="label-bright" text="Semesters offered" underline="true" VBox.vgrow="NEVER" />
          <ListView fx:id="semesterData" VBox.vgrow="NEVER" />
-         <HBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="ALWAYS">
+         <HBox alignment="TOP_LEFT">
             <children>
-               <Label fx:id="deadline" styleClass="label-bright" text="\$deadline" />
+                <Label styleClass="label-bright" text="Links: " />
+                <FlowPane fx:id="links" alignment="TOP_LEFT" />
             </children>
          </HBox>
-         <HBox alignment="BOTTOM_LEFT">
-            <children>
-               <Label styleClass="label-bright" text="Links: " />
-               <FlowPane fx:id="links" alignment="BOTTOM_LEFT" />
-            </children>
+         <HBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="NEVER">
+         <children>
+           <Label fx:id="deadline" styleClass="label-bright" text="\$deadline" />
+         </children>
          </HBox>
         </VBox>
   </content>

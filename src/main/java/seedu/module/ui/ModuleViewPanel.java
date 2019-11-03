@@ -49,13 +49,15 @@ public class ModuleViewPanel extends UiPart<Region> {
             .orElse("There are no preclusions for this module."));
         semesterData.setItems(module.getSemesterDetails().getAsObservableList());
         semesterData.setCellFactory(listView -> new ModuleSemesterDetailCell());
-
+        semesterData.setPrefHeight(120);            //hotfix here
         if (module instanceof Trackable) {
             Trackable trackedModule = ((Trackable) module);
             deadline.setText(trackedModule.getDeadline());
             trackedModule.getLink().stream().map(link -> new LinkButton(link))
                     .forEach(button -> links.getChildren().add(button));
+            links.setPrefWrapLength(500);
             links.setHgap(10);
+            links.setVgap(5);
         }
     }
 
