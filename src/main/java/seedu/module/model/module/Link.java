@@ -23,7 +23,7 @@ public class Link {
 
         requireNonNull(url);
         String properLink = url;
-        if(!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://")){
+        if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://")) {
             properLink = "http://" + url;
         }
         if (!isValidUrl(properLink)) {

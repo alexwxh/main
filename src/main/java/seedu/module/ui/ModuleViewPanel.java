@@ -49,7 +49,7 @@ public class ModuleViewPanel extends UiPart<Region> {
             .orElse("There are no preclusions for this module."));
         semesterData.setItems(module.getSemesterDetails().getAsObservableList());
         semesterData.setCellFactory(listView -> new ModuleSemesterDetailCell());
-        semesterData.setPrefHeight(120);            //hotfix here
+        semesterData.setPrefHeight(120); //hotfix here
         if (module instanceof Trackable) {
             Trackable trackedModule = ((Trackable) module);
             deadline.setText(trackedModule.getDeadline());

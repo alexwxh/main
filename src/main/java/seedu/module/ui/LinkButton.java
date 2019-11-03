@@ -1,6 +1,5 @@
 package seedu.module.ui;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import seedu.module.model.module.Link;
 
