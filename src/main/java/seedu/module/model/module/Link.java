@@ -85,23 +85,23 @@ public class Link {
         }
     }
 
-    public boolean isMarked(){
+    public boolean isMarked() {
         return this.marked;
     }
 
-    public boolean setMarked(){
-        if (this.marked){
+    public boolean setMarked() {
+        if (this.marked) {
             return false;
-        } else{
+        } else {
             this.marked = true;
             return true;
         }
     }
 
     public boolean setUnmarked() {
-        if (!this.marked){
+        if (!this.marked) {
             return false;
-        } else{
+        } else {
             this.marked = false;
             return true;
         }

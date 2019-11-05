@@ -36,12 +36,17 @@ public class MarkLinkCommand extends LinkCommand {
         throw new CommandException("Link with matching title not found");
     }
 
+    /**
+     * Marks/unmarks link object. Marked object are pushed to front, unmarked are pushed to the back of list.
+     * @param target
+     * @param moduleToAccess
+     */
     private void markLink(Link target, TrackedModule moduleToAccess) {
         moduleToAccess.getLink().removeIf(module -> module.equals(target));
-        if (this.mark){
+        if (this.mark) {
             target.setMarked();
             moduleToAccess.getLink().add(0, target);
-        } else{
+        } else {
             target.setUnmarked();
             moduleToAccess.getLink().add(target);
         }

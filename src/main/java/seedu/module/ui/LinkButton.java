@@ -13,7 +13,7 @@ public class LinkButton extends Button {
 
     public LinkButton(Link link) {
         super(link.name);
-        if(link.isMarked()){
+        if (link.isMarked()) {
             this.setText("\u2605" + link.name);
         }
         this.link = link;
