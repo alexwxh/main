@@ -260,11 +260,11 @@ Deletes the link with the given link title in the respective module.
 
 Example: `link delete n/module website`
 
-==== `mark`
+==== `mark`/`unmark`
 
 Format: `link mark n/LINK_NAME`
 
-Marks the link with the given link title in the respective module
+Marks/unmarks the link with the given link title in the respective module
 
 Example: `link mark n/module website`
 
