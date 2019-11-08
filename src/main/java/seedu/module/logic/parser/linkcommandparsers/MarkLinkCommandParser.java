@@ -22,7 +22,7 @@ public class MarkLinkCommandParser {
             String title = argMultimap.getValue(PREFIX_NAME).get();
             return new MarkLinkCommand(title, mark);
         } else {
-            throw new ParseException(Link.MESSAGE_CONSTRAINTS);
+            throw new ParseException("No mark target specified");
         }
     }
 

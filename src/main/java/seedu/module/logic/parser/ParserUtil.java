@@ -1,5 +1,6 @@
 package seedu.module.logic.parser;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import seedu.module.commons.core.index.Index;
 import seedu.module.commons.util.StringUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
@@ -22,6 +23,25 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Returns True if the string given is a valid URL
+     * @param url
+     * @return
+     */
+    public static boolean isValidUrl(String url) {
+        String[] scheme = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(scheme);
+        return urlValidator.isValid(url);
+    }
+
+    public static String checkScheme(String url) {
+        String properLink = url;
+        if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://")) {
+            properLink = "http://" + url;
+        }
+        return properLink;
     }
 
 }

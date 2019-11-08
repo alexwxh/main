@@ -22,7 +22,7 @@ public class LaunchLinkCommandParser {
             String title = argMultimap.getValue(PREFIX_NAME).get();
             return new LaunchLinkCommand(title);
         } else {
-            throw new ParseException(Link.MESSAGE_CONSTRAINTS);
+            throw new ParseException("No launch target specified");
         }
     }
 }

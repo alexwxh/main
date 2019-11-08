@@ -22,7 +22,7 @@ public class DeleteLinkCommandParser {
             String title = argMultimap.getValue(PREFIX_NAME).get();
             return new DeleteLinkCommand(title);
         } else {
-            throw new ParseException(Link.MESSAGE_CONSTRAINTS);
+            throw new ParseException("No delete target specified");
         }
     }
 
