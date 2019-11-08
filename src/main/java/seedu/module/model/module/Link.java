@@ -9,7 +9,6 @@ import java.net.URI;
 import org.apache.commons.validator.routines.UrlValidator;
 
 import seedu.module.model.module.exceptions.LinkAccessException;
-import seedu.module.model.module.exceptions.LinkCreationException;
 
 /**
  * Represents a Link in a TrackedModule
@@ -21,7 +20,7 @@ public class Link {
     public final String name;
     private boolean marked = false;
 
-    public Link(String name, String url) throws LinkCreationException {
+    public Link(String name, String url) throws IllegalArgumentException {
 
         requireNonNull(url);
         String properLink = url;
@@ -29,13 +28,13 @@ public class Link {
             properLink = "http://" + url;
         }
         if (!isValidUrl(properLink)) {
-            throw new LinkCreationException(MESSAGE_CONSTRAINTS);
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         this.name = name;
         this.url = properLink;
     }
 
-    public Link(String name, String url, boolean marked) throws LinkCreationException {
+    public Link(String name, String url, boolean marked) throws IllegalArgumentException {
 
         requireNonNull(url);
         String properLink = url;
@@ -43,7 +42,7 @@ public class Link {
             properLink = "http://" + url;
         }
         if (!isValidUrl(properLink)) {
-            throw new LinkCreationException(MESSAGE_CONSTRAINTS);
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         this.name = name;
         this.url = properLink;
