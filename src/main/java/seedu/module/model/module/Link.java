@@ -6,8 +6,6 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 
-import org.apache.commons.validator.routines.UrlValidator;
-
 import seedu.module.model.module.exceptions.LinkAccessException;
 
 /**

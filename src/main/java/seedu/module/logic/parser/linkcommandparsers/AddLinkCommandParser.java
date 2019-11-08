@@ -23,7 +23,7 @@ public class AddLinkCommandParser {
         if (argMultimap.getValue(PREFIX_LINK).isPresent() && argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String title = argMultimap.getValue(PREFIX_NAME).get();
             String link = ParserUtil.checkScheme(argMultimap.getValue(PREFIX_LINK).get());
-            if (!ParserUtil.isValidUrl(link)){
+            if (!ParserUtil.isValidUrl(link)) {
                 throw new ParseException("Not a valid URL");
             }
             Link addedLink = new Link(title.trim(), link.trim());

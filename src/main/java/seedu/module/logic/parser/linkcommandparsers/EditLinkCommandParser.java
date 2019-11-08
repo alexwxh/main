@@ -1,17 +1,15 @@
 package seedu.module.logic.parser.linkcommandparsers;
 
+import static seedu.module.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_NEW_LINK;
+import static seedu.module.logic.parser.CliSyntax.PREFIX_NEW_NAME;
+
 import java.util.Optional;
 
 import seedu.module.logic.commands.linkcommands.EditLinkCommand;
 import seedu.module.logic.parser.ArgumentMultimap;
 import seedu.module.logic.parser.ParserUtil;
 import seedu.module.logic.parser.exceptions.ParseException;
-import seedu.module.model.module.Link;
-
-import static seedu.module.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_NEW_NAME;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_NEW_LINK;
-
 
 /**
  * Parser specific to EditLinkCommand
@@ -31,7 +29,7 @@ public class EditLinkCommandParser {
             if (newLink.isPresent()) {
                 String link = newLink.get();
                 link = ParserUtil.checkScheme(link);
-                if (!ParserUtil.isValidUrl(link)){
+                if (!ParserUtil.isValidUrl(link)) {
                     throw new ParseException("Not a valid URL");
                 }
                 newLink = Optional.of(link);
