@@ -1,7 +1,14 @@
 package seedu.module.logic.commands.linkcommands;
 
+import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.module.logic.commands.CommandTestUtil.assertCommandSuccess;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.module.logic.commands.CommandResult;
 import seedu.module.model.Model;
 import seedu.module.model.ModelManager;
@@ -13,13 +20,6 @@ import seedu.module.testutil.ArchivedModuleBuilder;
 import seedu.module.testutil.ArchivedModuleListBuilder;
 import seedu.module.testutil.ModuleBookBuilder;
 import seedu.module.testutil.TrackedModuleBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.module.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
 
 class DeleteLinkCommandTest {
     private final String name = "website";
@@ -45,11 +45,12 @@ class DeleteLinkCommandTest {
     }
 
     @Test
-    void execute_deleteValidLink_success() {
+    public void execute_deleteValidLink_success() {
         TrackedModule expectedModule = new TrackedModuleBuilder().build();
         expectedModel.addModule(expectedModule);
         expectedModel.setDisplayedModule(expectedModule);
-        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_DELETE_SUCCESS);
+        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_DELETE_SUCCESS,
+                false, true, false);
         assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 

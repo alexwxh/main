@@ -1,7 +1,14 @@
 package seedu.module.logic.commands.linkcommands;
 
+import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.module.logic.commands.CommandTestUtil.assertCommandSuccess;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.module.logic.commands.CommandResult;
 import seedu.module.model.Model;
 import seedu.module.model.ModelManager;
@@ -14,16 +21,9 @@ import seedu.module.testutil.ArchivedModuleListBuilder;
 import seedu.module.testutil.ModuleBookBuilder;
 import seedu.module.testutil.TrackedModuleBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.module.logic.commands.CommandTestUtil.assertCommandSuccess;
-
-class MarkLinkCommandTest {
-    MarkLinkCommand command = new MarkLinkCommand("website", true);
+public class MarkLinkCommandTest {
+    private MarkLinkCommand command = new MarkLinkCommand("website", true);
+    private final Link link = new Link ("website", "http://example.com");
     private Model model = new ModelManager();
     private Model expectedModel = new ModelManager();
 
@@ -31,7 +31,6 @@ class MarkLinkCommandTest {
     public void beforeEach() {
         model = new ModelManager();
         expectedModel = new ModelManager();
-        Link link = new Link ("website", "http://example.com");
         ArchivedModule archivedModule = new ArchivedModuleBuilder().build();
         ModuleBook moduleBook = new ModuleBookBuilder().withArchivedModules(
                 new ArchivedModuleListBuilder().withArchivedModule(archivedModule).build())
@@ -51,15 +50,22 @@ class MarkLinkCommandTest {
                 .withLinks(new ArrayList<>(Arrays.asList(markedLink))).build();
         expectedModel.addModule(expectedModule);
         expectedModel.setDisplayedModule(expectedModule);
-        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_MARK_SUCCESS);
+        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_MARK_SUCCESS,
+                false, true, false);
         assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 
     @Test
-    public void execute_markAlreadyMarked_throwsCommandException() {
+    public void execute_markAlreadyMarked_successWithDifferentCommandResult() {
         TrackedModule trackedModule = (TrackedModule) model.getDisplayedModule().get();
         trackedModule.getLink().get(0).setMarked();
-        assertCommandFailure(command, model, MarkLinkCommand.MESSAGE_ALREADY_MARKED);
+        Link markedLink = new Link ("website", "http://example.com", true);
+        TrackedModule expectedModule = new TrackedModuleBuilder()
+                .withLinks(new ArrayList<>(Arrays.asList(markedLink))).build();
+        expectedModel.addModule(expectedModule);
+        expectedModel.setDisplayedModule(expectedModule);
+        CommandResult expectedResult = new CommandResult(MarkLinkCommand.MESSAGE_ALREADY_MARKED);
+        assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 
     @Test

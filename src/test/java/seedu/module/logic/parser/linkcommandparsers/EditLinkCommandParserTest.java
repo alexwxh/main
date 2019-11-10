@@ -1,15 +1,17 @@
 package seedu.module.logic.parser.linkcommandparsers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.module.logic.commands.linkcommands.EditLinkCommand;
 import seedu.module.logic.parser.LinkCommandParser;
 import seedu.module.logic.parser.exceptions.ParseException;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class EditLinkCommandParserTest {
+public class EditLinkCommandParserTest {
     private static final String VALID_COMMAND_NAME_LINK = "edit n/website nn/new website nl/example.com";
     private static final String VALID_COMMAND_NO_ARGUMENTS = "edit n/website";
     private static final String INVALID_COMMAND_WRONG_URL = "edit n/website nl/wrong.a";
@@ -21,7 +23,7 @@ class EditLinkCommandParserTest {
     private LinkCommandParser parser = new LinkCommandParser();
 
     @Test
-    void parse() throws ParseException {
+    public void parse() throws ParseException {
         //valid both arguments
         assertEquals(parser.parse(VALID_COMMAND_NAME_LINK), expectedCommandNameLink);
         //valid no edit arguments

@@ -1,7 +1,13 @@
 package seedu.module.logic.commands.linkcommands;
 
+import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.module.model.Model;
 import seedu.module.model.ModelManager;
 import seedu.module.model.ModuleBook;
@@ -13,13 +19,7 @@ import seedu.module.testutil.ArchivedModuleListBuilder;
 import seedu.module.testutil.ModuleBookBuilder;
 import seedu.module.testutil.TrackedModuleBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
-
-class LaunchLinkCommandTest {
+public class LaunchLinkCommandTest {
     private final String name = "website";
     private Model model = new ModelManager();
 
@@ -40,7 +40,7 @@ class LaunchLinkCommandTest {
     }
 
     @Test
-    void execute_linkNotFound_throwsCommandException() {
+    public void execute_linkNotFound_throwsCommandException() {
         LaunchLinkCommand wrongCommand = new LaunchLinkCommand("wrong");
         assertCommandFailure(wrongCommand, model, LinkCommand.MESSAGE_LINK_NOT_FOUND);
     }

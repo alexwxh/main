@@ -1,13 +1,16 @@
 package seedu.module.model.module;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class LinkTest {
 
     @Test
-    public void constructor_null_throwsNullException(){
+    public void constructor_null_throwsNullException() {
         assertThrows(NullPointerException.class, () -> new Link(null, "http://example.com"));
         assertThrows(NullPointerException.class, () -> new Link("test", null));
     }
@@ -56,7 +59,7 @@ public class LinkTest {
         //same name same url
         assertTrue(comparedLink.equals(new Link ("test", "http://example.com")));
         //same name different url
-        assertFalse(comparedLink.equals(new Link("test",  "http://google.com")));
+        assertFalse(comparedLink.equals(new Link("test", "http://google.com")));
         //different name same url
         assertFalse(comparedLink.equals(new Link("ntest", "http://example.com")));
     }

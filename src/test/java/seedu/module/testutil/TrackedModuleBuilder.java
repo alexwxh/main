@@ -60,7 +60,18 @@ public class TrackedModuleBuilder {
         return this;
     }
 
+    /**
+     * Returns the TrackedModule with the built information
+     * @return
+     */
     public TrackedModule build() {
-        return new TrackedModule(archivedModule);
+        TrackedModule result = new TrackedModule(archivedModule);
+        for (Link link: links) {
+            result.addLink(link);
+        }
+        for (Deadline dl: deadline) {
+            result.addDeadline(dl);
+        }
+        return result;
     }
 }

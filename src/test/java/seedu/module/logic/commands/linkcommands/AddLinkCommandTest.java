@@ -3,6 +3,9 @@ package seedu.module.logic.commands.linkcommands;
 import static seedu.module.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.module.logic.commands.CommandTestUtil.assertCommandSuccess;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +21,7 @@ import seedu.module.testutil.ArchivedModuleListBuilder;
 import seedu.module.testutil.ModuleBookBuilder;
 import seedu.module.testutil.TrackedModuleBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-class AddLinkCommandTest {
+public class AddLinkCommandTest {
     private final Link link = new Link ("website", "http://example.com");
     private AddLinkCommand command = new AddLinkCommand(link);
     private Model model = new ModelManager();
@@ -48,7 +48,8 @@ class AddLinkCommandTest {
                 .withLinks(new ArrayList<>(Arrays.asList(link))).build();
         expectedModel.addModule(expectedModule);
         expectedModel.setDisplayedModule(expectedModule);
-        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_LINK_SUCCESS);
+        CommandResult expectedResult = new CommandResult(LinkCommand.MESSAGE_LINK_SUCCESS,
+                false, true, false);
         assertCommandSuccess(command, model, expectedResult, expectedModel);
     }
 

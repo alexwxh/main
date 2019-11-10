@@ -1,11 +1,14 @@
 package seedu.module.logic.parser.linkcommandparsers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.module.logic.commands.linkcommands.LaunchLinkCommand;
 import seedu.module.logic.parser.LinkCommandParser;
 import seedu.module.logic.parser.exceptions.ParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LaunchLinkCommandParserTest {
     private static final String VALID_COMMAND = "go n/website";
