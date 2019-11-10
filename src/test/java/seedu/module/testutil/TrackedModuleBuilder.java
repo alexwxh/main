@@ -5,6 +5,7 @@ import java.util.List;
 
 import seedu.module.model.module.ArchivedModule;
 import seedu.module.model.module.Deadline;
+import seedu.module.model.module.Link;
 import seedu.module.model.module.TrackedModule;
 
 /**
@@ -14,10 +15,12 @@ public class TrackedModuleBuilder {
 
     private ArchivedModule archivedModule;
     private List<Deadline> deadline;
+    private List<Link> links;
 
     public TrackedModuleBuilder() {
         archivedModule = new ArchivedModuleBuilder().build();
         deadline = new ArrayList<>();
+        links = new ArrayList<>();
     }
 
     /**
@@ -29,6 +32,7 @@ public class TrackedModuleBuilder {
             .withDescription(moduleToCopy.getDescription())
             .build();
         deadline = moduleToCopy.getDeadlineList();
+        links = moduleToCopy.getLink();
     }
 
     /**
@@ -44,6 +48,15 @@ public class TrackedModuleBuilder {
      */
     public TrackedModuleBuilder withDeadline(List<Deadline> deadline) {
         this.deadline = deadline;
+        return this;
+    }
+
+    /**
+     * Sets the links of the {@code TrackedModule} that we are building.
+     * @return
+     */
+    public TrackedModuleBuilder withLinks(List<Link> links) {
+        this.links = links;
         return this;
     }
 
