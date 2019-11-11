@@ -354,7 +354,7 @@ image::userguide/DeleteLinkStep1.png[][pdfwidth="50%",width="50%"]
 
 image::userguide/DeleteLinkStep2.png[][pdfwidth="50%",width="50%"]
 // tag::link[]
-                                      
+
 ==== Marking/unmarking a link: `link mark/unmark n/LINK_NAME`
 
 Some links may be more important than others, and you may access them more frequently. To keep track of that, you can mark them using the `mark` feature.
