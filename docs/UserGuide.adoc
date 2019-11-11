@@ -302,12 +302,12 @@ Suppose you are taking CS2103T, and you will frequently visit the course website
 
 . Enter the command
 
-image::userguide/AddLinkStep1.png[][pdfwidth="60%",width="60%"]
+image::userguide/AddLinkStep1.png[][pdfwidth="50%",width="50%"]
 
 [start=2]
 . Press Enter. You should see a new button created in the Links section and a success message.
 
-image::userguide/AddLinkStep2.png[][pdfwidth="60%",width="60%"]
+image::userguide/AddLinkStep2.png[][pdfwidth="50%",width="50%"]
 
 ==== Editing existing link: `link edit n/LINK_NAME [nn/NEW_NAME nl/NEW_URL]`
 
@@ -317,12 +317,12 @@ Suppose the name "Nusmods Timetable" is too long and you want to change it to ju
 
 . Enter the corresponding command
 
-image::userguide/EditLinkStep1.png[][pdfwidth="60%",width="60%"]
+image::userguide/EditLinkStep1.png[][pdfwidth="50%",width="50%"]
 
 [start=2]
 . Press Enter. The link should be updated with the new name and a success message should appear.
 
-image::userguide/EditLinkStep2.png[][pdfwidth="60%",width="60%"]
+image::userguide/EditLinkStep2.png[][pdfwidth="50%",width="50%"]
 
 ==== Launching the link: `link go n/LINK_NAME`
 
@@ -346,12 +346,12 @@ Suppose you have no use for a link to Nusmods in the module and you want to remo
 
 . Enter the delete command
 
-image::userguide/DeleteLinkStep1.png[][pdfwidth="60%",width="60%"]
+image::userguide/DeleteLinkStep1.png[][pdfwidth="50%",width="50%"]
 
 [start=2]
 . Press Enter. You should see a success message and the link should be gone.
 
-image::userguide/DeleteLinkStep2.png[][pdfwidth="60%",width="60%"]
+image::userguide/DeleteLinkStep2.png[][pdfwidth="50%",width="50%"]
 
 ==== Marking/unmarking a link: `link mark/unmark n/LINK_NAME`
 
@@ -361,11 +361,11 @@ Suppose you go to the course website of CS2103 very often and want to make sure 
 
 . Enter the command `link mark n/Course Website`
 
-image::userguide/MarkLinkStep1.png[][pdfwidth="60%",width="60%"]
+image::userguide/MarkLinkStep1.png[][pdfwidth="50%",width="50%"]
 [start=2]
 . Press Enter. The specified link will now be marked with a symbol and brought to the front of the list.
 
-image::userguide/MarkLinkStep2.png[][pdfwidth="60%",width="60%"]
+image::userguide/MarkLinkStep2.png[][pdfwidth="50%",width="50%"]
 
 // end::link[]
 
