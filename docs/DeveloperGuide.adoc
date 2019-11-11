@@ -469,7 +469,7 @@ The `XYZLinkCommandParser` class parses and returns a corresponding `XYZLinkComm
 The following activity diagram summarizes what happens when the link command is entered and executed:
 
 .Activity diagram for a LinkCommand execution
-image::LinkCommandActivityDiagram.png[][pdfwidth="50%",width="50%"]
+image::LinkCommandActivityDiagram.png[][pdfwidth="40%",width="40%"]
 
 An example usage scenario of an *add link* operation is given below and the behavior of the link management feature is shown.
 
