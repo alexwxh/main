@@ -16,6 +16,10 @@ endif::[]
 
 By: `Team AY1920S1-W13-1`      Since: `Sep 2019`      Licence: `MIT`
 
+== Introduction
+
+This developer guide describes the software architecture and implementation details of the software, ModuleBook. It is intended to be read by developers and software testers for the software.
+
 == Setting up
 
 Refer to the guide <<SettingUp#, here>>.
@@ -247,7 +251,7 @@ With the new data, users may be able to easier manage their tracked modules and 
 . pass:[<text style="color:darkgreen"><b>Completed modules</b></text>] and pass:[<text style="color:darkorange"><b>ongoing modules</b></text>] can be used to determine if a user fulfil the requirements for their pass:[<text style="color:blue"><b>planned modules</b></text>].
 // end::markmodulestatus[]
 
-// tag::searchfitering[]
+// tag::searchfiltering[]
 === Search filtering feature
 ==== Implementation
 
@@ -267,7 +271,7 @@ for the keywords.:
 .Activity diagram for search predicates.
 image::SearchActivityDiagram.png[]
 
-Figure 12 above shows how each predicate checks for the keyword. Do note that `DescriptionContainsKeywordsPredicate`
+The figure above shows how each predicate checks for the keyword. Do note that `DescriptionContainsKeywordsPredicate`
 and `TitleContainsKeywordsPredicate` requires their specified field to contain *all* of the keywords, while the rest of the
 predicates returns true as long as their field contains *at least one* of the keyword.
 
@@ -285,7 +289,7 @@ image::FindSequenceDiagram.png[]
 
 NOTE: The lifeline for `FindCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
-As represented in Figure 13, when a `FindCommandParser` is constructed by `ModuleBookParser#parseCommand`, the `FindCommandParser` would construct a list
+As represented in the figure above, when a `FindCommandParser` is constructed by `ModuleBookParser#parseCommand`, the `FindCommandParser` would construct a list
 of `Predicate<module>` based on the parsed arguments, which is used to construct a `FindCommand`.
 
 During the execution of `FindCommand#execute()`, each predicate is chained and applied to the `FilteredList`.
@@ -423,35 +427,63 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 [[Implementation-Configuration]]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: `config.json`).
+
+//tag::link[]
 
 === Link Management Feature
 
 The link management feature allows users to add and manage a set of website links that will be associated with a given module.
 
-==== Implementation
+==== Overview of link feature
 
-The link management feature is facilitated by the `link` class.
+===== Implementation
+
+Our application currently supports adding and managing of links specific to certain modules.
+
+The link management feature is primarily facilitated by the following classes:
+
+- `Link` - represents a link object
+
+- `TrackedModule` - represents a module that was tracked. Stores the `Link` objects related to it.
+
+- `LinkCommand` - embodies the `link` command input given by the user and contains the necessary changes that will be made to the `TrackedModule` object.
+
+- `LinkCommandParser` - parses user input related to `link` commands and returns the corresponding `LinkCommand` to be executed.
 
 Each `link` object is stored in an `ArrayList<Link>`, which in turn is stored in its corresponding `TrackedModule`.
 
-The link feature currently supports add, delete, edit and launch commands.
+In summary, the class diagram of how `Link` is implemented is shown as:
+
+.Class diagram for Link objects
+image::LinkClassDiagram.png[]
+
+The link feature currently recognizes and supports add, delete, edit and launch commands.
+
+Link commands are parsed through the `LinkCommandParser` class, which in turn calls the respective `XYZLinkCommandParser` class (i.e. `AddLinkCommandParser`, `EditLinkCommandParser`).
+The `XYZLinkCommandParser` class parses and returns a corresponding `XYZLinkCommand` class, which calls `execute()` and the `TrackedModule` will be updated accordingly if the execution was successful.
+
+The following activity diagram summarizes what happens when the link command is entered and executed:
+
+.Activity diagram for a LinkCommand execution
+image::LinkCommandActivityDiagram.png[]
 
 An example usage scenario of an *add link* operation is given below and the behavior of the link management feature is shown.
 
 1. The user launches the application with an existing save file. `ModuleBook` is initialized with existing `TrackedModule`.
 
-2. The user inputs `link MODULE_INDEX a/add n/LINK_NAME l/LINK_URL` to add a link with name `LINK_NAME`, linked to `LINK_URL` to the `TrackedModule` with the corresponding `MODULE_INDEX`.
+2. The user inputs `link add n/LINK_NAME l/LINK_URL` to add a link with name `LINK_NAME`, linked to `LINK_URL` to the `TrackedModule` with the corresponding `MODULE_INDEX`.
 
 3. `LogicManager` receives user input and parses it using `ModuleBookParser#parseCommand()`.  `ModuleBookParser` reads the `COMMAND_WORD` and identifies the input as a `Link` related command and passes the input to `LinkCommandParser`.
 
-4. `LinkCommandParser` determines the `add` action required through the `a/` prefix argument. It then proceeds to pass the relevant input to  `AddLinkCommandParser`.
+4. `LinkCommandParser` determines the `add` action required. It then proceeds to pass the relevant input to  `AddLinkCommandParser`.
 
 5. `AddLinkCommandParser` checks for the validity of `LINK_URL` given by the user and creates the relevant `Link` and `AddLinkCommand` objects.
 
-6. `AddLinkCommand` calls `Model#get(MODULE_INDEX)` to find the required module. If it does not exist or is not currently tracked, `AddLinkCommand` throws a `CommandException`. Otherwise, it then proceeds to call `TrackedModule#hasLinkTitle(LINK_NAME)` to check for an existing `Link` object with the same `LINK_NAME`.
+6. `AddLinkCommand` calls `Model#getDisplayedModule()` to find the required module. If it does not exist or is not currently tracked, `AddLinkCommand` throws a `CommandException`. Otherwise, it then proceeds to call `TrackedModule#hasLinkTitle(LINK_NAME)` to check for an existing `Link` object with the same `LINK_NAME`.
 
 7. If such a `Link` object exists, `AddLinkCommand` aborts and throws a `CommandException`. Otherwise, the created `Link` will be added to the specified `TrackedModule`.
 
@@ -466,7 +498,7 @@ image::AddLinkCommandSequenceDiagramExtension.png[]
 
 Aspect: Data structure used for link management
 
-* Alternative 1 (current choice): All `TrackedModule` maintain a `ArrayList<Link>`. Adding `Link` objects will add to this `ArrayList`.
+* Alternative 1: All `TrackedModule` maintain a `ArrayList<Link>`. Adding `Link` objects will add to this `ArrayList`.
 
 ** Pros: Easy to implement and edit for beginner programmers.
 
@@ -477,6 +509,11 @@ Aspect: Data structure used for link management
 ** Pros: Reduces access time, since `Link` objects can be obtained by giving `LINK_TITLE`, rather than searching the list linearly for a matching object.
 
 ** Cons: Difficult to add features. Future implmentations may add a `Priority` feature to `Link` objects. `HashSet` does not support any form of sorting and thus may pose a problem.
+
+* Solution (current implementation): Adopt alternative 1. Since from a user standpoint, the number of links added to any module should not be too large to affect performance of application.
+
+//end::link[]
+
 
 == Documentation
 
@@ -508,7 +545,7 @@ Refer to the guide <<DevOps#, here>>.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
@@ -521,31 +558,34 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |curious student |view a module's details |check out if I want to take the module
 
-|`* * *` |busy student |manage deadlines |keep track of my assignments and tasks
+|`* * *` |busy student |add and manage deadlines |keep track of my assignments and tasks
 
-|`* * *` |organized student |manage my grades |know roughly how well I'm doing in the module
+|`* * *` |organized student |add and manage hyperlinks |keep track of online resources and websites that the module uses
 
-|`* *` |new student |schedule my modules |plan how to approach my future focus areas
+|`* *` |student |catalog past modules |know what modules I have taken, and access the content if needed
 
 |`* *` |graduating student |check what modules I need to complete |
 
 |`* *` |computing student |plan my focus area modules |choose a specialization
 
-|`* *` |competitive student |calculate my GPA |
-
 |`* *` |busy student |prioritize certain modules (and their deadlines) |manage my time better
 
-|`* *` |organized student |manage files related to a module |add and tag files
+|`* *` |organized student |add and manage files |keep track of files related to a module
 
-|`* *` |student |catalog past modules |access the content conveniently
+|`* *` |organized student |add notes to a module |keep track of certain information about a module
+
+|`* *` |hardworking student |access past exam papers |download them without too much hassle
+
+|`*` |organized student |track my grades |know roughly how well I'm doing in the module
+
+|`*` |competitive student |calculate my GPA |
+
+|`*` |new student |schedule my modules |plan how to approach my future focus areas
 
 |`*` |student |generate a sample module planner |plan my modules
 
-|`*` |hardworking student |access past exam papers |
-
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -560,7 +600,7 @@ _{More to be added}_
 1.  User requests to find a module with incomplete keyword (e.g. 'CS2')
 2.  ModuleBook shows a list of modules matching the keyword (e.g. 'CS2030, CS2040, CS2100, CS2101, etc.')
 3.  User requests to track a module
-4.  ModuleBook tracks the module
+4.  ModuleBook tracks the module and displays to the user that the module is now tracked.
 +
 Use case ends.
 
@@ -605,8 +645,7 @@ _{More to be added}_
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `11` or above installed.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be able to track and manage about **60 modules** without unreasonable lag (as this is roughly more than the number of modules a typical student is expected to complete at NUS).
 
 [appendix]
 == Glossary
@@ -614,10 +653,31 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
+=== Common Application terms
+**Home view** - The state of the application that displays the home page in the main panel.
+
+image::userguide/Glossary_HomeView.png[]
+
+**Module view** - The state of the application that displays the specified module in the main panel.
+
+image::userguide/Glossary_ModuleView.png[]
+
+=== Common Module terms
+
+**Archived** - A module that the institution provides. Can be viewed and tracked. It is indicated by a gray vertical bar on the module list.
+
+image::userguide/Glossary_ArchivedModule.png[]
+
+**Tracked** - A module that is tracked. References an archived module. Can be viewed and untracked. It is indicated by a green vertical bar on the module list.
+
+image::userguide/Glossary_TrackedModule.png[]
+
+
 [appendix]
 == Product Survey
 
-LumiNUS
+[discrete]
+=== LumiNUS
 
 Pros:
 
@@ -632,7 +692,8 @@ Cons:
 
 '''
 
-NUSMods
+[discrete]
+=== NUSMods
 
 Pros:
 
@@ -665,8 +726,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a module
 
 . Deleting a module while all modules are listed
@@ -676,13 +735,3 @@ _{ more test cases ... }_
    Expected: Module with module code cs2103t is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete INVALID_MODULE_CODE` +
    Expected: No module is deleted. Error details shown in the status message. Status bar remains the same.
-
-_{ more test cases ... }_
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
